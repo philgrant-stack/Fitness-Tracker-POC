@@ -1,0 +1,164 @@
+import json
+import functions_framework
+from google.cloud import firestore
+from datetime import datetime
+
+# Firestore client (initialised once at cold start)
+db = firestore.Client()
+
+# Valid field values — matches API-SPEC.md
+VALID_TYPES = {"cycling", "cardio", "strength"}
+VALID_DURATIONS = {30, 45, 60}
+VALID_MUSCLES = {"Chest", "Back", "Legs", "Shoulders", "Arms", "Core"}
+
+CORS_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+}
+
+
+def json_response(data, status=200):
+    """Return a JSON response with CORS headers."""
+    return (json.dumps(data), status, {**CORS_HEADERS, "Content-Type": "application/json"})
+
+
+@functions_framework.http
+def fitness_api(request):
+    """
+    Entry point for all requests.
+    Routes to the appropriate handler based on path and method.
+    """
+
+    # Handle CORS preflight
+    if request.method == "OPTIONS":
+        return ("", 200, CORS_HEADERS)
+
+    path = request.path.rstrip("/")
+
+    if path == "/log":
+        return handle_log(request)
+    elif path == "/entries":
+        return handle_entries(request)
+    else:
+        return json_response({"error": f"Unknown path: {path}"}, 404)
+
+
+# ---------------------------------------------------------------------------
+# POST /log
+# ---------------------------------------------------------------------------
+
+def handle_log(request):
+    if request.method != "POST":
+        return json_response({"error": "Method not allowed"}, 405)
+
+    # Parse body
+    try:
+        body = request.get_json(silent=True)
+        if body is None:
+            return json_response({"error": "Request body must be valid JSON"}, 400)
+    except Exception:
+        return json_response({"error": "Could not parse request body"}, 400)
+
+    # Validate fields
+    error = validate_entry(body)
+    if error:
+        return json_response({"error": error}, 400)
+
+    # Build the Firestore document
+    entry = {
+        "user":       body["user"].strip(),
+        "type":       body["type"],
+        "duration":   int(body["duration"]),
+        "date":       body["date"],
+        "notes":      body.get("notes", "").strip(),
+        "muscle":     body.get("muscle") or None,
+        "created_at": firestore.SERVER_TIMESTAMP,
+    }
+
+    # Write to Firestore
+    try:
+        _, doc_ref = db.collection("fitness_entries").add(entry)
+        return json_response({"status": "ok", "id": doc_ref.id}, 200)
+    except Exception as e:
+        print(f"Firestore write error: {e}")
+        return json_response({"error": "Internal server error"}, 500)
+
+
+def validate_entry(body):
+    """Validate a log entry. Returns an error string, or None if valid."""
+
+    # Required fields
+    for field in ("user", "type", "duration", "date"):
+        if field not in body or body[field] is None or body[field] == "":
+            return f"Missing required field: {field}"
+
+    # user
+    if not isinstance(body["user"], str) or not body["user"].strip():
+        return "user must be a non-empty string"
+
+    # type
+    if body["type"] not in VALID_TYPES:
+        return f"type must be one of: {', '.join(sorted(VALID_TYPES))}"
+
+    # duration
+    try:
+        duration = int(body["duration"])
+    except (TypeError, ValueError):
+        return "duration must be a number"
+    if duration not in VALID_DURATIONS:
+        return f"duration must be one of: {', '.join(str(d) for d in sorted(VALID_DURATIONS))}"
+
+    # date — expect YYYY-MM-DD
+    try:
+        datetime.strptime(body["date"], "%Y-%m-%d")
+    except ValueError:
+        return "date must be in YYYY-MM-DD format"
+
+    # muscle — required for strength, must be null otherwise
+    muscle = body.get("muscle")
+    if body["type"] == "strength":
+        if not muscle or muscle not in VALID_MUSCLES:
+            return f"muscle is required when type is strength. Must be one of: {', '.join(sorted(VALID_MUSCLES))}"
+    else:
+        if muscle:
+            return "muscle must be null when type is not strength"
+
+    return None
+
+
+# ---------------------------------------------------------------------------
+# GET /entries
+# ---------------------------------------------------------------------------
+
+def handle_entries(request):
+    if request.method != "GET":
+        return json_response({"error": "Method not allowed"}, 405)
+
+    try:
+        # Fetch all entries, sorted by date descending then created_at descending
+        docs = (
+            db.collection("fitness_entries")
+            .order_by("date", direction=firestore.Query.DESCENDING)
+            .order_by("created_at", direction=firestore.Query.DESCENDING)
+            .stream()
+        )
+
+        entries = []
+        for doc in docs:
+            data = doc.to_dict()
+            entries.append({
+                "id":       doc.id,
+                "user":     data.get("user"),
+                "type":     data.get("type"),
+                "duration": data.get("duration"),
+                "date":     data.get("date"),
+                "notes":    data.get("notes", ""),
+                "muscle":   data.get("muscle"),
+            })
+
+        return json_response(entries, 200)
+
+    except Exception as e:
+        print(f"Firestore read error: {e}")
+        return json_response({"error": "Internal server error"}, 500)
