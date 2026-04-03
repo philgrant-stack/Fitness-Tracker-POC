@@ -22,7 +22,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Deploy Cloud Function
-        uses: google-github-actions/deploy-cloud-Functions@v3
+        uses: google-github-actions/deploy-cloud-functions@v3
         with:
           name: fitness-api
           runtime: python311
