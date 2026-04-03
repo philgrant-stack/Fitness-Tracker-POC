@@ -31,3 +31,4 @@ jobs:
           entry_point: fitness_api
           project_id: fitness-tracker-poc-492000
           ingress_settings: ALLOW_ALL
+          environment_variables: GOOGLE_FUNCTION_SOURCE=main.py
