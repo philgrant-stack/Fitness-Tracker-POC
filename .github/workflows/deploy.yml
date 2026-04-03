@@ -1,6 +1,7 @@
 name: Deploy Cloud Function
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
