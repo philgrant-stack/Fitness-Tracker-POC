@@ -629,7 +629,264 @@
 
   .nav-btn.active { color: #3b82f6; }
 
-  /* Animations */
+  /* Hero consistency card */
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+  }
+
+  .hero-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .hero-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .hero-days {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .hero-days-value {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-days-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Per-user breakdown cards */
+  .user-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .user-breakdown-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .user-breakdown-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .breakdown-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .breakdown-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+
+  .breakdown-sessions {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .breakdown-sessions span {
+    color: var(--text);
+    font-size: 1.1rem;
+  }
+
+  .activity-split {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .split-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .split-pill-cycling {
+    background: var(--accent-cycling-bg);
+    color: var(--accent-cycling);
+  }
+
+  .split-pill-cardio {
+    background: var(--accent-cardio-bg);
+    color: var(--accent-cardio);
+  }
+
+  .split-pill-strength {
+    background: var(--accent-strength-bg);
+    color: var(--accent-strength);
+  }
+
+  .no-activity {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  /* Mickey banner */
+  .mickey-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mickey-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+  }
+
+  .mickey-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .mickey-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #78350f, #92400e);
+    border: 2px solid #f59e0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .mickey-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #f59e0b;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .mickey-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .mickey-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .mickey-loading {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mickey-loading::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--border);
+    border-top-color: #f59e0b;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
@@ -646,10 +903,11 @@
   <div class="header">
     <h1>Squad Fitness</h1>
     <div class="header-right">
-      <select class="user-select" id="currentUser">
+      <select class="user-select" id="currentUser" onchange="handleUserChange(this)">
         <option value="Phil">Phil</option>
-        <option value="Alex">Alex</option>
-        <option value="Sam">Sam</option>
+        <option value="Troy">Troy</option>
+        <option value="Ananth">Ananth</option>
+        <option value="__new__">+ Add user</option>
       </select>
     </div>
   </div>
@@ -728,8 +986,8 @@
       <select class="feed-filter" id="feedFilter" onchange="renderFeed()">
         <option value="all">Everyone</option>
         <option value="Phil">Phil</option>
-        <option value="Alex">Alex</option>
-        <option value="Sam">Sam</option>
+        <option value="Troy">Troy</option>
+        <option value="Ananth">Ananth</option>
       </select>
     </div>
     <div id="feedList"></div>
@@ -737,7 +995,9 @@
 
   <!-- Stats View -->
   <div class="view" id="view-stats">
-    <div class="stats-grid" id="statsGrid"></div>
+    <div id="mickeyBanner"></div>
+    <div id="heroCard"></div>
+    <div id="userCards"></div>
     <div class="leaderboard-card" id="leaderboard"></div>
   </div>
 </div>
@@ -785,7 +1045,38 @@
 
   loadEntries();
 
-  // Set default date
+  // --- User colours ---
+  const USER_COLORS = { Phil: '#3b82f6', Troy: '#f97316', Ananth: '#a855f7' };
+
+  function getUserColor(name) {
+    if (USER_COLORS[name]) return USER_COLORS[name];
+    // Generate a consistent color for dynamic users
+    const hue = [...name].reduce((acc, c) => acc + c.charCodeAt(0), 0) % 360;
+    return `hsl(${hue}, 65%, 60%)`;
+  }
+
+  // --- Handle user dropdown change ---
+  function handleUserChange(select) {
+    if (select.value === '__new__') {
+      const name = prompt('Enter your name:');
+      if (name && name.trim()) {
+        const trimmed = name.trim();
+        // Add to both dropdowns if not already there
+        [document.getElementById('currentUser'), document.getElementById('feedFilter')].forEach(el => {
+          if (![...el.options].some(o => o.value === trimmed)) {
+            const opt = document.createElement('option');
+            opt.value = trimmed;
+            opt.textContent = trimmed;
+            // Insert before the last option (+ Add user) in currentUser, or at end in feedFilter
+            el.insertBefore(opt, el.options[el.options.length - 1]);
+          }
+        });
+        select.value = trimmed;
+      } else {
+        select.value = 'Phil';
+      }
+    }
+  }
   document.getElementById('entryDate').valueAsDate = new Date();
 
   // --- Activity selection ---
@@ -889,7 +1180,7 @@
       return;
     }
 
-    const colors = { Phil: '#3b82f6', Alex: '#f97316', Sam: '#a855f7' };
+    const colors = { Phil: '#3b82f6', Troy: '#f97316', Ananth: '#a855f7' };
 
     list.innerHTML = filtered.map((e, i) => {
       const badgeClass = e.type === 'cycling' ? 'badge-cycling' : e.type === 'cardio' ? 'badge-cardio' : 'badge-strength';
@@ -923,7 +1214,8 @@
 
   // --- Stats ---
   function renderStats() {
-    const grid = document.getElementById('statsGrid');
+    const heroEl = document.getElementById('heroCard');
+    const userCardsEl = document.getElementById('userCards');
     const lb = document.getElementById('leaderboard');
 
     const thisWeekStart = new Date();
@@ -931,45 +1223,90 @@
     thisWeekStart.setHours(0, 0, 0, 0);
 
     const weekEntries = entries.filter(e => new Date(e.date + 'T00:00:00') >= thisWeekStart);
-    const totalMinutes = weekEntries.reduce((sum, e) => sum + e.duration, 0);
-    const totalSessions = weekEntries.length;
-    const uniqueDays = new Set(weekEntries.map(e => e.date)).size;
+    const allUsers = [...new Set(entries.map(e => e.user))];
 
-    // Last 7 days streak
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const streakDays = [];
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
-      streakDays.push({
-        label: days[d.getDay() === 0 ? 6 : d.getDay() - 1],
-        active: entries.some(e => e.date === dateStr)
-      });
+    // --- Mickey banner: show loading state, then fetch pep talk ---
+    const mickeyEl = document.getElementById('mickeyBanner');
+    mickeyEl.innerHTML = `
+      <div class="mickey-banner">
+        <div class="mickey-header">
+          <div class="mickey-avatar">🥊</div>
+          <div>
+            <div class="mickey-title">Mickey</div>
+            <div class="mickey-subtitle">Your Coach</div>
+          </div>
+        </div>
+        <div class="mickey-loading">Gettin' outta the corner...</div>
+      </div>
+    `;
+    fetchMickeyPepTalk(allUsers, weekEntries);
+
+    // --- Hero card: most consistent (most active days this week) ---
+    const userDays = {};
+    allUsers.forEach(u => {
+      userDays[u] = new Set(weekEntries.filter(e => e.user === u).map(e => e.date)).size;
+    });
+    const topUser = allUsers.length > 0
+      ? allUsers.reduce((a, b) => (userDays[a] || 0) >= (userDays[b] || 0) ? a : b)
+      : null;
+
+    if (topUser && userDays[topUser] > 0) {
+      heroEl.innerHTML = `
+        <div class="hero-card">
+          <div class="hero-label">🏆 Most consistent this week</div>
+          <div class="hero-content">
+            <div class="hero-avatar" style="background: ${getUserColor(topUser)}">${topUser[0]}</div>
+            <div>
+              <div class="hero-name">${topUser}</div>
+              <div class="hero-sub">Leading the squad</div>
+            </div>
+            <div class="hero-days">
+              <div class="hero-days-value">${userDays[topUser]}</div>
+              <div class="hero-days-label">active days</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      heroEl.innerHTML = `
+        <div class="hero-card">
+          <div class="hero-label">🏆 Most consistent this week</div>
+          <div class="hero-content">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">No activity logged this week yet. Get moving!</div>
+          </div>
+        </div>
+      `;
     }
 
-    grid.innerHTML = `
-      <div class="stat-card">
-        <div class="stat-value">${totalMinutes}</div>
-        <div class="stat-label">Minutes this week</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">${totalSessions}</div>
-        <div class="stat-label">Sessions this week</div>
-      </div>
-      <div class="stat-card wide">
-        <div class="stat-value">${uniqueDays} <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/ 7 days</span></div>
-        <div class="stat-label">Active days this week</div>
-        <div class="streak-bar">
-          ${streakDays.map(d => `<div class="streak-day ${d.active ? 'active' : ''}"></div>`).join('')}
-        </div>
-        <div class="streak-labels">
-          ${streakDays.map(d => `<span>${d.label}</span>`).join('')}
-        </div>
+    // --- Per-user breakdown cards ---
+    userCardsEl.innerHTML = `
+      <div class="user-cards-grid">
+        ${allUsers.map(user => {
+          const userWeek = weekEntries.filter(e => e.user === user);
+          const sessions = userWeek.length;
+          const cycling = userWeek.filter(e => e.type === 'cycling').length;
+          const cardio = userWeek.filter(e => e.type === 'cardio').length;
+          const strength = userWeek.filter(e => e.type === 'strength').length;
+          return `
+            <div class="user-breakdown-card">
+              <div class="user-breakdown-top">
+                <div class="breakdown-avatar" style="background: ${getUserColor(user)}">${user[0]}</div>
+                <span class="breakdown-name">${user}</span>
+                <span class="breakdown-sessions"><span>${sessions}</span> session${sessions !== 1 ? 's' : ''} this week</span>
+              </div>
+              <div class="activity-split">
+                ${sessions === 0 ? `<span class="no-activity">No activity this week</span>` : ''}
+                ${cycling > 0 ? `<span class="split-pill split-pill-cycling">🚴 ${cycling} cycling</span>` : ''}
+                ${cardio > 0 ? `<span class="split-pill split-pill-cardio">🏃 ${cardio} cardio</span>` : ''}
+                ${strength > 0 ? `<span class="split-pill split-pill-strength">🏋️ ${strength} strength</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
 
-    // Leaderboard
+    // --- Leaderboard (all time) ---
     const userTotals = {};
     entries.forEach(e => {
       userTotals[e.user] = (userTotals[e.user] || 0) + e.duration;
@@ -978,15 +1315,99 @@
     const rankClasses = ['gold', 'silver', 'bronze'];
 
     lb.innerHTML = `
-      <div class="leaderboard-title">Leaderboard — Total Minutes</div>
+      <div class="leaderboard-title">Leaderboard — All Time Minutes</div>
       ${sorted.map(([name, mins], i) => `
         <div class="leaderboard-row">
           <span class="lb-rank ${rankClasses[i] || ''}">${i + 1}</span>
+          <div class="breakdown-avatar" style="background: ${getUserColor(name)}; width:28px; height:28px; font-size:0.7rem;">${name[0]}</div>
           <span class="lb-name">${name}</span>
           <span class="lb-value">${mins} min</span>
         </div>
       `).join('')}
     `;
+  }
+
+  // --- Mickey pep talk via Anthropic API ---
+  async function fetchMickeyPepTalk(allUsers, weekEntries) {
+    const mickeyEl = document.getElementById('mickeyBanner');
+
+    // Build user stats summary for the prompt
+    const userSummary = allUsers.map(user => {
+      const sessions = weekEntries.filter(e => e.user === user).length;
+      const days = new Set(weekEntries.filter(e => e.user === user).map(e => e.date)).size;
+      return `${user}: ${sessions} session${sessions !== 1 ? 's' : ''}, ${days} active day${days !== 1 ? 's' : ''}`;
+    }).join('\n');
+
+    const topUser = allUsers.length > 0
+      ? allUsers.reduce((a, b) => {
+          const aDays = new Set(weekEntries.filter(e => e.user === a).map(e => e.date)).size;
+          const bDays = new Set(weekEntries.filter(e => e.user === b).map(e => e.date)).size;
+          return aDays >= bDays ? a : b;
+        })
+      : null;
+
+    const bottomUser = allUsers.length > 1
+      ? allUsers.reduce((a, b) => {
+          const aDays = new Set(weekEntries.filter(e => e.user === a).map(e => e.date)).size;
+          const bDays = new Set(weekEntries.filter(e => e.user === b).map(e => e.date)).size;
+          return aDays <= bDays ? a : b;
+        })
+      : null;
+
+    const prompt = `You are Mickey from Rocky — gruff, old school, no nonsense, Brooklyn accent. 
+Write a short pep talk (3-4 sentences max) for a fitness tracking squad. 
+Celebrate ${topUser || 'the leader'} who is crushing it this week. 
+${bottomUser && bottomUser !== topUser ? `Brutally (but humorously) mock ${bottomUser} who is slacking.` : ''}
+Be blunt, funny, and in character. No hashtags, no emojis.
+
+This week's stats:
+${userSummary || 'No activity logged yet this week.'}`;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': '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',
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await res.json();
+      const text = data.content?.[0]?.text || "Get off the couch. That's all I got.";
+
+      mickeyEl.innerHTML = `
+        <div class="mickey-banner">
+          <div class="mickey-header">
+            <div class="mickey-avatar">🥊</div>
+            <div>
+              <div class="mickey-title">Mickey</div>
+              <div class="mickey-subtitle">Your Coach</div>
+            </div>
+          </div>
+          <div class="mickey-text">"${text}"</div>
+        </div>
+      `;
+    } catch (e) {
+      mickeyEl.innerHTML = `
+        <div class="mickey-banner">
+          <div class="mickey-header">
+            <div class="mickey-avatar">🥊</div>
+            <div>
+              <div class="mickey-title">Mickey</div>
+              <div class="mickey-subtitle">Your Coach</div>
+            </div>
+          </div>
+          <div class="mickey-text">"I got nothin' to say to youse right now. Get back to work."</div>
+        </div>
+      `;
+    }
   }
 </script>
 
