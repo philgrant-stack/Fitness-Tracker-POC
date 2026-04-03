@@ -760,27 +760,30 @@
 </nav>
 
 <script>
+  // --- API ---
+  const API_URL = 'https://australia-southeast1-fitness-tracker-poc-492000.cloudfunctions.net/fitness-api';
+
   // --- State ---
   let entries = [];
   let selectedActivity = null;
   let selectedMuscle = null;
   let selectedDuration = null;
 
-  // Seed some demo data
-  const demoData = [
-    { user: 'Phil', type: 'cycling', duration: 45, date: '2026-04-02', notes: 'Morning ride along the bay', muscle: null },
-    { user: 'Alex', type: 'strength', duration: 60, date: '2026-04-02', notes: 'Feeling strong', muscle: 'Chest' },
-    { user: 'Sam', type: 'cardio', duration: 30, date: '2026-04-02', notes: '', muscle: null },
-    { user: 'Phil', type: 'strength', duration: 50, date: '2026-04-01', notes: 'Heavy deadlifts', muscle: 'Back' },
-    { user: 'Alex', type: 'cycling', duration: 90, date: '2026-04-01', notes: 'Long weekend ride', muscle: null },
-    { user: 'Sam', type: 'strength', duration: 40, date: '2026-04-01', notes: '', muscle: 'Legs' },
-    { user: 'Phil', type: 'cardio', duration: 25, date: '2026-03-31', notes: 'Treadmill intervals', muscle: null },
-    { user: 'Sam', type: 'cycling', duration: 35, date: '2026-03-31', notes: 'Quick spin', muscle: null },
-    { user: 'Alex', type: 'cardio', duration: 45, date: '2026-03-30', notes: 'Rowing machine', muscle: null },
-    { user: 'Phil', type: 'strength', duration: 55, date: '2026-03-30', notes: 'Shoulder press PR!', muscle: 'Shoulders' },
-  ];
+  // --- Load entries from Firestore via Cloud Function ---
+  async function loadEntries() {
+    try {
+      const res = await fetch(`${API_URL}/entries`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      entries = await res.json();
+    } catch (e) {
+      console.error('Failed to load entries:', e);
+      entries = [];
+    }
+    renderFeed();
+    renderStats();
+  }
 
-  entries = [...demoData];
+  loadEntries();
 
   // Set default date
   document.getElementById('entryDate').valueAsDate = new Date();
@@ -810,7 +813,7 @@
   }
 
   // --- Log entry ---
-  function logEntry() {
+  async function logEntry() {
     const user = document.getElementById('currentUser').value;
     const duration = selectedDuration;
     const date = document.getElementById('entryDate').value;
@@ -830,13 +833,20 @@
       muscle: selectedActivity === 'strength' ? selectedMuscle : null
     };
 
-    entries.unshift(entry);
-
-    // TODO: POST to Cloud Function here
-    // fetch(CLOUD_FUNCTION_URL + '/log', { method: 'POST', body: JSON.stringify(entry) })
-
-    showToast();
-    resetForm();
+    try {
+      const res = await fetch(`${API_URL}/log`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await loadEntries();
+      showToast();
+      resetForm();
+    } catch (e) {
+      console.error('Failed to log entry:', e);
+      alert('Failed to save. Please try again.');
+    }
   }
 
   function resetForm() {
